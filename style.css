@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+    background-color: bisque ;
+}
+
+.container {
+
+    border: 5px solid black ;
+    width: 400px ;
+    height: 600px;
+}
+
+
+.numbers, 
+.mathSigns {
+    width : 50px ;
+    height: 50px ; 
+}
+
+.mathSigns {
+    background-color: rgb(33, 127, 127) ;
+    flex: 1 1 auto ;
+}
+
+.display {
+    border-bottom : 3px solid black ;
+    padding: 50px; 
+}
+
