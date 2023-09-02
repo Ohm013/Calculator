@@ -5,20 +5,44 @@
 
 const container = document.querySelector("container");
 const numbers = document.querySelectorAll(".digits .numbers");
-const operators = document.querySelectorAll("mathSigns"); 
-const num1 = document.querySelector('#num1');
+//const operators = document.querySelectorAll(".mathSigns"); 
+const plus = document.querySelector("#add");
+const minus = document.querySelector("#subtract");
+const multiply = document.querySelector('#multiply');
+const divide = document.querySelector("#divide");
+const display = document.querySelector('.display');
+
 
 numbers.forEach((number) => {
-    number.addEventListener('click', function(e) {
-        console.log(e.target.value);
-       // return e.target.value
+    number.addEventListener('click', (e) => {
+      //  console.log(e.target.value);
+        screen(e.target.value)
+        return e.target.value
 });
 });
 
+function screen (show) {
+    
+    display.textContent = `${show}`
 
-//function mathOperation (numbers, operator) {
-  //  return `${numbers} + ${operator}`
-//}
+}
+
+let operators = [plus, minus, multiply, divide] ; 
+
+
+//operators.forEach((operator => {
+    //operator.addEventListener('click', (e) => {
+      //   console.log(e.target); 
+   // });
+    //}));
+    
+
+
+function mathOperation (numbers, operator) {
+   `${numbers} + ${operator} + ${numbers}`
+     number + operator + number
+
+}
 
 
 function add (num1, num2) { //prob will have to add reduce to these functions
@@ -29,10 +53,10 @@ function subtract (num1, num2) { //prob will have to add reduce to these functio
     return num1 - num2 ;
 }
 
-function multiply (num1, num2) { //prob will have to add reduce to these functions
-    return num1 * num2 ;
-}
+//function multiply (num1, num2) { //prob will have to add reduce to these functions
+  //  return num1 * num2 ;
+//}
 
-function divide (num1, num2) { //prob will have to add reduce to these functions
-    return num1 / num2 ;
-}
+//function divide (num1, num2) { //prob will have to add reduce to these functions
+    //return num1 / num2 ;
+//}
