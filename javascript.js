@@ -5,37 +5,70 @@
 
 const container = document.querySelector("container");
 const numbers = document.querySelectorAll(".digits .numbers");
-//const operators = document.querySelectorAll(".mathSigns"); 
-const plus = document.querySelector("#add");
-const minus = document.querySelector("#subtract");
-const multiply = document.querySelector('#multiply');
-const divide = document.querySelector("#divide");
+const operators = document.querySelectorAll(".mathSigns"); 
+//const plus = document.querySelector("#add");
+//const minus = document.querySelector("#subtract");
+//const multiply = document.querySelector('#multiply');
+//const divide = document.querySelector("#divide");
 const display = document.querySelector('.display');
 
+let firstNum = "";
+let secondNum = "" ; 
+let operator = "";
 
+//if no operator then firstNum = first clicked and if there is operator then the clicked value = secondNum
 numbers.forEach((number) => {
     number.addEventListener('click', (e) => {
-      //  console.log(e.target.value);
-        screen(e.target.value)
-        return e.target.value
-});
+      if(operator === "") {
+        firstNum = e.target.value ;
+        console.log(firstNum);
+      }else {
+        secondNum = e.target.value; 
+        console.log(secondNum);
+      }
+      });
 });
 
-function screen (show) {
-    
-    display.textContent = `${show}`
+operators.forEach((op => {
+  op.addEventListener('click', (e) => {
+    if( operator !== "equal") {
+      operator =  e.target.value;
+      console.log(operator)
+    }else{
+
+      switch(operator){
+        case "+": 
+          console.log (add(firstNum, secondNum));
+          break;
+      case "-": 
+          console.log (subtract(firstNum, secondNum));
+          break;
+      case "x": 
+          console.log (multiply(firstNum, secondNum));
+          break;
+
+      }
+
+
+
+
+    }
+ });
+}));
+
+function calculate () {
+ 
+}
+//operator = "+" {
+  //add(firstNum, secondNum)
+//}
+
+
+
+function screen (char) {
+    display.textContent  += `${char}`
 
 }
-
-let operators = [plus, minus, multiply, divide] ; 
-
-
-//operators.forEach((operator => {
-    //operator.addEventListener('click', (e) => {
-      //   console.log(e.target); 
-   // });
-    //}));
-    
 
 
 function mathOperation (numbers, operator) {
@@ -46,17 +79,17 @@ function mathOperation (numbers, operator) {
 
 
 function add (num1, num2) { //prob will have to add reduce to these functions
-    return num1 + num2 ;
+  return num1 + num2 ;
 }
 
 function subtract (num1, num2) { //prob will have to add reduce to these functions
     return num1 - num2 ;
 }
 
-//function multiply (num1, num2) { //prob will have to add reduce to these functions
-  //  return num1 * num2 ;
-//}
+function multiply (num1, num2) { //prob will have to add reduce to these functions
+    return num1 * num2 ;
+}
 
-//function divide (num1, num2) { //prob will have to add reduce to these functions
-    //return num1 / num2 ;
-//}
+function divide (num1, num2) { //prob will have to add reduce to these functions
+    return num1 / num2 ;
+}
