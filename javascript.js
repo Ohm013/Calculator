@@ -32,17 +32,19 @@ const display = document.querySelector('.display');
 let firstNum = "";
 let secondNum = "" ; 
 let operator = "";
-
+let result = "";
 //if no operator then firstNum = first clicked and if there is operator then the clicked value = secondNum
 numbers.forEach((number) => {
     number.addEventListener('click', (e) => {
       
       if(operator === "") {
         firstNum += e.target.value ;
+        console.log(firstNum);
         operate(firstNum);
       }else {
         secondNum += e.target.value; 
         operate(secondNum);
+        console.log(secondNum); 
       } 
      
     });
@@ -54,6 +56,7 @@ operators.forEach((op => {
   op.addEventListener('click', (e) => {
     if( op !== "=") {
       operator =  e.target.value;
+      console.log(operator); 
       operate(operator);
       //console.log(operator)
    // }else if (op = e.target.value  && op === "equal") {
@@ -66,29 +69,30 @@ operators.forEach((op => {
 
   
 function operate (num1,sign ,num2 ) {
-num1 = firstNum;
+num1 = Number(firstNum);
 sign = operator ;
-num2 = secondNum;
+num2 = Number(secondNum);
 
       switch(sign){
         case "+": 
-          console.log(num1 + num2);
+          result = add(num1,num2)
           break;
         case "-": 
-          console.log(num1 - num2);
+        result = subtract(num1,num2)
+      
           break;
         case "x": 
-          console.log(num1 * num2);
+        result = multiply(num1,num2)
+        
           break;
         case "/": 
-          console.log(num1 / num2);
+        result = divide(num1,num2)
+        
           break;
       }
+      console.log(result);
   //I think when it was adding, it added them as strings. "1 + 2" = 12. It works for subtraction though.
 //Gonna need parseInt here
-console.log(num1); 
-console.log(sign); 
-console.log(num2); 
 }
 //operate() ; 
 
