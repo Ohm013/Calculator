@@ -24,10 +24,20 @@
             //sign = operator ;
             //num2 = secondNum;
 //Now I can try and combining all three variables to do the math such as if (sign === "+") { add(num1,num2)}
+
+//Issue #4: operate function was adding numbers as strings
+//Solution #4: convert the variables to numbers like "num1 = Number(firstNum)"
+
+//Issue #5 : When attempting to display the numbers dynamically on the calculator, it messes up when the number is more than one digit
+    // For ex: Trying to click 22 would mean press "2" once so that shows up then "2" again so it does "222". It adds the first 2 clicked to the 22 showing 222
+//Solution #5 : took out the "+" in "display.textContent  += `${char}`" 
+
 const container = document.querySelector("container");
 const numbers = document.querySelectorAll(".digits .numbers");
 const operators = document.querySelectorAll(".mathSigns"); 
 const display = document.querySelector('.display');
+const clear = document.querySelector("#clear");
+const del = document.querySelector("#delete");
 
 let firstNum = "";
 let secondNum = "" ; 
@@ -39,12 +49,13 @@ numbers.forEach((number) => {
       
       if(operator === "") {
         firstNum += e.target.value ;
-        console.log(firstNum);
         operate(firstNum);
+        screen(firstNum);
       }else {
         secondNum += e.target.value; 
         operate(secondNum);
-        console.log(secondNum); 
+        screen(secondNum); 
+        
       } 
      
     });
@@ -56,7 +67,7 @@ operators.forEach((op => {
   op.addEventListener('click', (e) => {
     if( op !== "=") {
       operator =  e.target.value;
-      console.log(operator); 
+      screen(operator); 
       operate(operator);
       //console.log(operator)
    // }else if (op = e.target.value  && op === "equal") {
@@ -79,26 +90,41 @@ num2 = Number(secondNum);
           break;
         case "-": 
         result = subtract(num1,num2)
-      
           break;
         case "x": 
         result = multiply(num1,num2)
-        
           break;
         case "/": 
         result = divide(num1,num2)
-        
           break;
       }
       console.log(result);
-  //I think when it was adding, it added them as strings. "1 + 2" = 12. It works for subtraction though.
-//Gonna need parseInt here
+
 }
-//operate() ; 
 
-function screen (char) {
-    display.textContent  += `${char}`
+clear.addEventListener('click', (e) => {
+  display.textContent = ""
+  firstNum  = ""
+  secondNum = ""
+  operator = ""
+  result = "";
+});
 
+function screen (a,b,c) {
+a = firstNum
+b = operator
+c= secondNum 
+
+    display.textContent  = `${a}${b}${c} `
+        if (typeof b === "undefined") {
+          return a
+        }else if(typeof b !== "undefined") {
+          return a + b
+        }else if(typeof c !== "undefined") {
+          return a + b + c
+        }else{
+          return 
+        }
 }
 
 
