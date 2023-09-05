@@ -1,15 +1,32 @@
 //Issue #1 : Trying to create buttons 0-9 with loops so don't have to create them and querySelect all of them individually
 // Solution #1 : Made the buttons manually
 
-//Issue #2: Trying to figure out how to get the add, subtract functions to recognize the buttons. Generalize it between a number and operator
+//Issue #2:  Decipher it between a number and operator.
+//Trying to figure out how to store the first number clicked on as num1, operator, and num2
 
+//Solution #2: let firstNum = "", secondNum = "", operator = ""
+//  if(operator === "") {     //if there has been NO operator clicked then it'll be the first number
+       // firstNum += e.target.value ;
+        //console.log(firstNum);
+      //}else {              // this basically means if an operator HAS been clicked then next will be the SECOND number
+        //secondNum += e.target.value; 
+        //console.log(secondNum);
+
+//Issue #3 : Trying to figure out how to assign  variables firstNum, secondNum, and operator to function operate as parameters such as " function operate (firstNum, operator, secondNum)"
+//Solution #3 : Send the firstNum, secondNum, and operator variable to function operate like
+    // operate(firstNum);
+    // operate(secondNum);
+    // operate(operator);
+
+  //They started as global variables so they can be accessed from anywhere. So I reassigned them in function operate like  
+      //function operate (num1,sign ,num2 ) {
+            //num1 = firstNum;
+            //sign = operator ;
+            //num2 = secondNum;
+//Now I can try and combining all three variables to do the math such as if (sign === "+") { add(num1,num2)}
 const container = document.querySelector("container");
 const numbers = document.querySelectorAll(".digits .numbers");
 const operators = document.querySelectorAll(".mathSigns"); 
-//const plus = document.querySelector("#add");
-//const minus = document.querySelector("#subtract");
-//const multiply = document.querySelector('#multiply');
-//const divide = document.querySelector("#divide");
 const display = document.querySelector('.display');
 
 let firstNum = "";
@@ -19,51 +36,61 @@ let operator = "";
 //if no operator then firstNum = first clicked and if there is operator then the clicked value = secondNum
 numbers.forEach((number) => {
     number.addEventListener('click', (e) => {
+      
       if(operator === "") {
-        firstNum = e.target.value ;
-        console.log(firstNum);
+        firstNum += e.target.value ;
+        operate(firstNum);
       }else {
-        secondNum = e.target.value; 
-        console.log(secondNum);
-      }
-      });
+        secondNum += e.target.value; 
+        operate(secondNum);
+      } 
+     
+    });
+   
 });
+
 
 operators.forEach((op => {
   op.addEventListener('click', (e) => {
-    if( operator !== "equal") {
+    if( op !== "=") {
       operator =  e.target.value;
-      console.log(operator)
-    }else{
+      operate(operator);
+      //console.log(operator)
+   // }else if (op = e.target.value  && op === "equal") {
 
-      switch(operator){
-        case "+": 
-          console.log (add(firstNum, secondNum));
-          break;
-      case "-": 
-          console.log (subtract(firstNum, secondNum));
-          break;
-      case "x": 
-          console.log (multiply(firstNum, secondNum));
-          break;
-
-      }
-
-
-
-
-    }
- });
-}));
-
-function calculate () {
+   // }else if (operator === "+") {
+        
+     }
+   }) }))
  
+
+  
+function operate (num1,sign ,num2 ) {
+num1 = firstNum;
+sign = operator ;
+num2 = secondNum;
+
+      switch(sign){
+        case "+": 
+          console.log(num1 + num2);
+          break;
+        case "-": 
+          console.log(num1 - num2);
+          break;
+        case "x": 
+          console.log(num1 * num2);
+          break;
+        case "/": 
+          console.log(num1 / num2);
+          break;
+      }
+  //I think when it was adding, it added them as strings. "1 + 2" = 12. It works for subtraction though.
+//Gonna need parseInt here
+console.log(num1); 
+console.log(sign); 
+console.log(num2); 
 }
-//operator = "+" {
-  //add(firstNum, secondNum)
-//}
-
-
+//operate() ; 
 
 function screen (char) {
     display.textContent  += `${char}`
@@ -71,11 +98,6 @@ function screen (char) {
 }
 
 
-function mathOperation (numbers, operator) {
-   `${numbers} + ${operator} + ${numbers}`
-     number + operator + number
-
-}
 
 
 function add (num1, num2) { //prob will have to add reduce to these functions
