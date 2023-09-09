@@ -45,24 +45,23 @@ const equalSign = document.querySelector("#equal");
 
 let firstNum = "";
 let secondNum = "" ; 
-let operator = "";
+let firstOp = "";
 let result = ""
+let secondOp = "";
 //if no operator then firstNum = first clicked and if there is operator then the clicked value = secondNum
 numbers.forEach((number) => {
     number.addEventListener('click', (e) => {
       
-      if(operator === "") {
+      if(firstOp === "") {
         firstNum += e.target.value ;
         console.log(firstNum)
-        operate(firstNum);
         screen(firstNum);
-      }else if( firstNum !== "") {
+      }else if( firstNum) {
         secondNum += e.target.value; 
         console.log(secondNum)
-        operate(secondNum);
         screen(secondNum);  
-      }else if (operator == "equal") {
-        operate(firstNum,operator,secondNum); 
+      }else if (secondOp == "equal") {
+        operate(firstNum,firstOp,secondNum); 
        
   
  } })
@@ -71,22 +70,30 @@ numbers.forEach((number) => {
 
 operators.forEach((op => {
   op.addEventListener('click', (e) => {
-    op = operator
+    op = firstOp
     if( op === "") {
-      operator =  e.target.value;
-      console.log(operator)
-      screen(operator); 
-      operate(operator);
-    }else if (firstNum !== "" && secondNum !== ""){
-      operate(firstNum,secondNum);
-      
-      
+      firstOp =  e.target.value;
+      console.log(firstOp)
+      screen(firstOp); 
+    }else if (op){
+      secondOp = e.target.value
+      console.log(secondOp);
+      operate(firstNum,firstOp,secondNum); 
+
+
     }}
 )}));  
 
+//while (secondOp == "") {
+  //operate();
+
+  //if(secondOp)/
+//}
+
+
 function operate (num1,sign ,num2 ) {
   num1 = Number(firstNum);
-  sign = operator ;
+  sign = firstOp ;
   num2 = Number(secondNum);
   
   switch(sign){  
@@ -94,7 +101,7 @@ function operate (num1,sign ,num2 ) {
         result = add(num1,num2)
         break;
      case "-": 
-        result =subtract(num1,num2)
+        result = subtract(num1,num2)
         break;
      case "x": 
         result = multiply(num1,num2)
@@ -104,18 +111,18 @@ function operate (num1,sign ,num2 ) {
         break;
   }
        console.log(result); 
-       screen(result); 
+       
 }
 //function equalPressed () {
   //equalSign.addEventListener('click', operate)
 
 //}
-function screen () {
+function screen (result) {
   num = firstNum ;
-    if (result !== ""){
+    if (result)
       display.textContent = `${result}`;
-    }
-  sign = operator
+    
+  sign = firstOp
   secNum = secondNum;
   
   display.textContent  = `${num}${sign}${secNum} `
