@@ -48,6 +48,8 @@
   // firstNum = result
  // screen(result);
 
+//Issue #6 : When clicking "equal" button, it shows the result with "equal" after it like "526equal". Fixed that by adding if statement if equal clicked but other problem is that can't do any math after equal is clicked. It equals undefined
+//Solution #6 : Removed the "results =" from "result =  operate(firstNum,firstOp,secondNum);" for the secondOp
 const container = document.querySelector("container");
 const numbers = document.querySelectorAll(".digits .numbers");
 const operators = document.querySelectorAll(".mathSigns"); 
@@ -63,8 +65,7 @@ let result = ""
 let secondOp = "";
 //if no operator then firstNum = first clicked and if there is operator then the clicked value = secondNum
 numbers.forEach((number) => {
-    number.addEventListener('click', (e) => {
-      
+    number.addEventListener('click', (e) => {   
       if(firstOp === "") {
         firstNum += e.target.value ;
         console.log(firstNum)
@@ -74,12 +75,10 @@ numbers.forEach((number) => {
         console.log(secondNum)
         screen(secondNum);  
       }else if (secondOp == "equal") {
-        operate(firstNum,firstOp,secondNum); 
-       
-  
+        operate(firstNum,firstOp,secondNum);  
+        
  } })
-    });
-
+});
 
 operators.forEach((op => {
   op.addEventListener('click', (e) => {
@@ -91,8 +90,8 @@ operators.forEach((op => {
     }else if (op){
       secondOp = e.target.value
       console.log(secondOp);
-      result = operate(firstNum,firstOp,secondNum); 
-      secondNum = ""
+      operate(firstNum,firstOp,secondNum); // sends original numbers to calculate
+      secondNum = ""  
       firstOp = secondOp 
       screen(firstOp,secondNum); 
     }
@@ -115,8 +114,12 @@ function operate (num1,sign ,num2 ) {
         result = multiply(num1,num2)
         break;
       case "/": 
-        result = divide(num1,num2)
-        break;
+        if (num2 === 0){
+          clearAll();
+          alert("You know you can't do that"); 
+        }else{
+          result = divide(num1,num2)
+        }break;
   }
        console.log(result); 
        firstNum = result
@@ -127,35 +130,39 @@ function operate (num1,sign ,num2 ) {
 function screen () {
   num = firstNum ;  
   sign = firstOp
+  if (sign == "equal"){
+    sign = ""; 
+  }
   secNum = secondNum;
-  
   display.textContent  = `${num}${sign}${secNum} `
    
 }
 
+
+clear.addEventListener('click', clearAll)
 function clearAll () {
-  clear.addEventListener('click', () => {
     display.textContent = ""
     firstNum  = "";
     secondNum = "";
     firstOp = ""
     result = "";
-  });
-}
+    secondOp = ""; 
+  };
+
 clearAll() ;
 
-function add (num1, num2) { //prob will have to add reduce to these functions
+function add (num1, num2) { 
   return num1 + num2 ;
 }
 
-function subtract (num1, num2) { //prob will have to add reduce to these functions
+function subtract (num1, num2) { 
     return num1 - num2 ;
 }
 
-function multiply (num1, num2) { //prob will have to add reduce to these functions
+function multiply (num1, num2) { 
     return num1 * num2 ;
 }
 
-function divide (num1, num2) { //prob will have to add reduce to these functions
+function divide (num1, num2) { 
   return num1 / num2 ;
 }
