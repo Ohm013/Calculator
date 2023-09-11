@@ -33,7 +33,20 @@
 //Solution #5 : took out the "+" in "display.textContent  += `${char}`" 
 
 //Issue #6: Making the result of calculation show when operator clicked for a second time. When a operator is clicked a second time, it just changes it for the previous equation instead of showing th result and putting the second operator after the result number
+//Solution #6 : This one took a while and I was thinking about doing this method but didnt try till now
+  //Created a secondOp variable so I can store a variable for when the second operator is clicked. When an operator is clicked after the origina one it gets stored in secondOp.
+    //When the secondOp gets stored that triggers the events of sending the original num1,firstOp, and num2 to function operatoe to do the math. Then that result will become num1 and the secondOp will become firstOp.
+//  }else if (op){  // if op which is firstOp exists then whatever operator clicked next will do the things below
+ // secondOp = e.target.value
+  //console.log(secondOp);
+  //result = operate(firstNum,firstOp,secondNum); this send original numbers to operate
+  //secondNum = ""  this will reset secondNum to nothing 
+ // firstOp = secondOp  //and this will make the firstOp equal secondOp leaving the secondOp empty for it to be triggered again.
+  //screen(firstOp,secondNum); 
 
+  // Adding the two lines below to function operate outside of the switch case leads to making the result into firstNum everytime
+  // firstNum = result
+ // screen(result);
 
 const container = document.querySelector("container");
 const numbers = document.querySelectorAll(".digits .numbers");
@@ -71,25 +84,20 @@ numbers.forEach((number) => {
 operators.forEach((op => {
   op.addEventListener('click', (e) => {
     op = firstOp
-    if( op === "") {
+    if( op === "") { 
       firstOp =  e.target.value;
       console.log(firstOp)
       screen(firstOp); 
     }else if (op){
       secondOp = e.target.value
       console.log(secondOp);
-      operate(firstNum,firstOp,secondNum); 
-
-
-    }}
-)}));  
-
-//while (secondOp == "") {
-  //operate();
-
-  //if(secondOp)/
-//}
-
+      result = operate(firstNum,firstOp,secondNum); 
+      secondNum = ""
+      firstOp = secondOp 
+      screen(firstOp,secondNum); 
+    }
+    })}
+));  
 
 function operate (num1,sign ,num2 ) {
   num1 = Number(firstNum);
@@ -111,22 +119,18 @@ function operate (num1,sign ,num2 ) {
         break;
   }
        console.log(result); 
+       firstNum = result
+       screen(result);
        
 }
-//function equalPressed () {
-  //equalSign.addEventListener('click', operate)
 
-//}
-function screen (result) {
-  num = firstNum ;
-    if (result)
-      display.textContent = `${result}`;
-    
+function screen () {
+  num = firstNum ;  
   sign = firstOp
   secNum = secondNum;
   
   display.textContent  = `${num}${sign}${secNum} `
-    //if (operator === "undefined")
+   
 }
 
 function clearAll () {
@@ -134,7 +138,7 @@ function clearAll () {
     display.textContent = ""
     firstNum  = "";
     secondNum = "";
-    operator = ""
+    firstOp = ""
     result = "";
   });
 }
