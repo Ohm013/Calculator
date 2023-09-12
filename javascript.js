@@ -56,7 +56,6 @@ const operators = document.querySelectorAll(".mathSigns");
 const display = document.querySelector('.display');
 const clear = document.querySelector("#clear");
 const del = document.querySelector("#delete");
-const equalSign = document.querySelector("#equal");
 
 let firstNum = "";
 let secondNum = "" ; 
@@ -75,9 +74,9 @@ numbers.forEach((number) => {
         console.log(secondNum)
         screen(secondNum);  
       }else if (secondOp == "equal") {
-        operate(firstNum,firstOp,secondNum);  
-        
- } })
+        operate(firstNum,firstOp,secondNum); 
+      }  //add condition where when u click equal that when a number is clicked after the result is showing, it shouldnt add the number to the result but to a whoole new equation 
+})
 });
 
 operators.forEach((op => {
@@ -121,6 +120,7 @@ function operate (num1,sign ,num2 ) {
           result = divide(num1,num2)
         }break;
   }
+       result = Math.round((result + Number.EPSILON) * 100)  / 100; 
        console.log(result); 
        firstNum = result
        screen(result);
@@ -138,16 +138,20 @@ function screen () {
    
 }
 
+del.addEventListener('click', () => { //create backspace button and decimal button
+display.splice(display.length-1, 1)
 
+})
 clear.addEventListener('click', clearAll)
+
 function clearAll () {
-    display.textContent = ""
-    firstNum  = "";
-    secondNum = "";
-    firstOp = ""
-    result = "";
-    secondOp = ""; 
-  };
+  display.textContent = ""
+  firstNum  = "";
+  secondNum = "";
+  firstOp = ""
+  result = "";
+  secondOp = ""; 
+};
 
 clearAll() ;
 
