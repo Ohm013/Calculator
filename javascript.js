@@ -56,6 +56,8 @@ const operators = document.querySelectorAll(".mathSigns");
 const display = document.querySelector('.display');
 const clear = document.querySelector("#clear");
 const del = document.querySelector("#delete");
+const currDis = document.getElementById("#currrent-display");
+const prevDis = document.getElementById("#prev-display");
 
 let firstNum = "";
 let secondNum = "" ; 
@@ -64,20 +66,26 @@ let result = ""
 let secondOp = "";
 //if no operator then firstNum = first clicked and if there is operator then the clicked value = secondNum
 numbers.forEach((number) => {
-    number.addEventListener('click', (e) => {   
-      if(firstOp === "") {
-        firstNum += e.target.value ;
-        console.log(firstNum)
-        screen(firstNum);
-      }else if( firstNum) {
-        secondNum += e.target.value; 
-        console.log(secondNum)
-        screen(secondNum);  
-      }else if (secondOp == "equal") {
-        operate(firstNum,firstOp,secondNum); 
-      }  //add condition where when u click equal that when a number is clicked after the result is showing, it shouldnt add the number to the result but to a whoole new equation 
-})
-});
+    number.addEventListener('click', (e)=> {
+      e = e.target.value
+      getNum(e)
+   //add condition where when u click equal that when a number is clicked after the result is showing, it shouldnt add the number to the result but to a whoole new equation 
+})});
+
+function getNum (e) {
+  if(firstOp === "") {
+    firstNum += e ;
+    console.log(firstNum)
+    screen(firstNum);
+  }else if( firstNum) {
+    secondNum += e; 
+    console.log(secondNum)
+    screen(secondNum);  
+  }else if (secondOp == "equal") {
+    operate(firstNum,firstOp,secondNum); 
+  } 
+
+}
 
 operators.forEach((op => {
   op.addEventListener('click', (e) => {
@@ -120,12 +128,13 @@ function operate (num1,sign ,num2 ) {
           result = divide(num1,num2)
         }break;
   }
-       result = Math.round((result + Number.EPSILON) * 100)  / 100; 
+       result = Math.round((result + Number.EPSILON) * 1000)  / 1000; 
        console.log(result); 
        firstNum = result
        screen(result);
        
 }
+
 
 function screen () {
   num = firstNum ;  
@@ -134,12 +143,12 @@ function screen () {
     sign = ""; 
   }
   secNum = secondNum;
-  display.textContent  = `${num}${sign}${secNum} `
+  display.textContent  = `${num} ${sign} ${secNum} `
    
 }
 
 del.addEventListener('click', () => { //create backspace button and decimal button
-display.splice(display.length-1, 1)
+screen.splice(screen.length-1, 1)
 
 })
 clear.addEventListener('click', clearAll)
