@@ -58,17 +58,29 @@ const clear = document.querySelector("#clear");
 const del = document.querySelector("#delete");
 const currDis = document.getElementById("#currrent-display");
 const prevDis = document.getElementById("#prev-display");
+const decimal = document.querySelector("#decimal");
 
 let firstNum = "";
 let secondNum = "" ; 
 let firstOp = "";
 let result = ""
 let secondOp = "";
+let decimalCount = 0
 //if no operator then firstNum = first clicked and if there is operator then the clicked value = secondNum
 numbers.forEach((number) => {
     number.addEventListener('click', (e)=> {
       e = e.target.value
+
+      if (e === "."){
+        decimalCount++;
+      }
+
+      if (e === "." && decimalCount > 1) {
+        return
+      }
       getNum(e)
+
+      
    //add condition where when u click equal that when a number is clicked after the result is showing, it shouldnt add the number to the result but to a whoole new equation 
 })});
 
@@ -84,8 +96,10 @@ function getNum (e) {
   }else if (secondOp == "equal") {
     operate(firstNum,firstOp,secondNum); 
   } 
-
+ // prevent from clicking decimal multiple times for a number
+  
 }
+
 
 operators.forEach((op => {
   op.addEventListener('click', (e) => {
@@ -94,6 +108,7 @@ operators.forEach((op => {
       firstOp =  e.target.value;
       console.log(firstOp)
       screen(firstOp); 
+      decimalCount = 0
     }else if (op){
       secondOp = e.target.value
       console.log(secondOp);
@@ -105,11 +120,19 @@ operators.forEach((op => {
     })}
 ));  
 
+if(firstNum.includes(".") || (secondNum.includes("."))){
+  decimal.setAttribute('disabled','');
+}else if (firstOp || secondOp){
+  decimal.removeAttribute('disabled','');
+}
+
 function operate (num1,sign ,num2 ) {
   num1 = Number(firstNum);
   sign = firstOp ;
   num2 = Number(secondNum);
   
+
+
   switch(sign){  
       case "+": 
         result = add(num1,num2)
@@ -121,19 +144,19 @@ function operate (num1,sign ,num2 ) {
         result = multiply(num1,num2)
         break;
       case "/": 
-        if (num2 === 0){
-          clearAll();
-          alert("You know you can't do that"); 
+      if (num2 === 0){
+        clearAll();
+        alert("You know you can't do that"); 
         }else{
           result = divide(num1,num2)
-        }break;
-  }
+        }
+  
        result = Math.round((result + Number.EPSILON) * 1000)  / 1000; 
        console.log(result); 
        firstNum = result
        screen(result);
        
-}
+}}
 
 
 function screen () {
