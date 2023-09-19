@@ -14,39 +14,44 @@
 
        
         <div class = "display"> 
-            <div id = "prev-display"></div>
-            <div id = "current-display"></div>
+            <div id = "current-display" class = screen></div>
+            <div id = "result-display" class = screen></div>
         </div>
+     <div class = "non-display">
+        <div class = "non-operators">
+            <div class = "erase">
+                <button id = clear class = undo > C </button>
+                <button id = delete class = undo value = delete> DEL</DEL> </button>  
+            </div>
+
         
-        <div class = "erase">
-            <button id = clear class = undo > CLEAR </button>
-            <button id = delete class = undo > DELETE</DEL> </button>
-        </div>
-
-        <div class = "digits">
-            <button id = num0 class = numbers value = 0> 0 </button>
-            <button id = num1 class = numbers value = 1> 1 </button>
-            <button id = num2 class = numbers value = 2> 2 </button>
-            <button id = num3 class = numbers value = 3> 3 </button>
-            <button id = num4 class = numbers value = 4> 4 </button>
-            <button id = num5 class = numbers value = 5> 5 </button>
-            <button id = num6 class = numbers value = 6> 6 </button>
-            <button id = num7 class = numbers value = 7> 7 </button>
-            <button id = num8 class = numbers value = 8> 8 </button>
-            <button id = num9 class = numbers value = 9> 9 </button>
-            <button id = decimal class = numbers value = .> . </button>
-        </div>
-
-
-        <div class = "operators">
-            <button id = add class = mathSigns value = + > + </button>
-            <button id = subtract class = mathSigns value = - > &#8722; </button>
-            <button id = multiply class = mathSigns value = x > &#215; </button>
-            <button id = divide class =  mathSigns value = / > &#247; </button>  <!-- division sign code  &#247 -->
-            <button id = equal class = mathSigns value = equal > = </button>
-        </div>
-        
-
+                <div class = "digits">
+                    <button id = num1 class = numbers value = 1> 1 </button>
+                    <button id = num2 class = numbers value = 2> 2 </button>
+                    <button id = num3 class = numbers value = 3> 3 </button>
+                    <button id = num4 class = numbers value = 4> 4 </button>
+                    <button id = num5 class = numbers value = 5> 5 </button>
+                    <button id = num6 class = numbers value = 6> 6 </button>
+                    <button id = num7 class = numbers value = 7> 7 </button>
+                    <button id = num8 class = numbers value = 8> 8 </button>
+                    <button id = num9 class = numbers value = 9> 9 </button>
+                    <button id = decimal class = numbers value = .> . </button>
+                    <button id = num0 class = numbers value = 0> 0 </button>
+                </div>
+            </div>
+                    <div class = "operators">
+                            <button id = add  class = mathSigns value = + > + </button>
+                            <button id = subtract class = mathSigns value = ->&#8722;  </button> <!--&#8722; -->
+                            <button id = multiply class = mathSigns value = x > &#215;</button><!--&#215;-->
+                            <button id = divide class =  mathSigns value = / >  &#247; </button>  <!--  &#247;  division sign code  &#247 -->
+                        <div class = "equal-button">
+                            <button id = equal class = mathSigns value = equal > = </button>
+                        </div>
+                    </div>
+           
+            
+    </div>
+         
     </div>
     
 </body>

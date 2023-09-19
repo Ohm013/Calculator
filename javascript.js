@@ -1,3 +1,153 @@
+//Come back and made the two displays for current and prev equation
+const container = document.querySelector("container");
+const numbers = document.querySelectorAll(".digits .numbers");
+const operators = document.querySelectorAll(".mathSigns"); 
+const display = document.querySelector('.display');
+const clear = document.querySelector("#clear");
+const del = document.querySelector("#delete");
+const currDis = document.querySelector("#current-display");
+const resultDis = document.querySelector("#result-display");
+
+let firstNum = "";
+let secondNum = "" ; 
+let firstOp = "";
+let result = ""
+let secondOp = "";
+let decimalCount = 0
+
+//if no operator then firstNum = first clicked and if there is operator then the clicked value = secondNum
+numbers.forEach((number) => {
+    number.addEventListener('click', (e)=> {
+      e = e.target.value
+      if (e === "."){ // +1 for each decimal
+        decimalCount++;
+      }
+      if (e === "." && decimalCount > 1) { // For more than one decimal don't do anything. Return
+        return
+      }
+      getNum(e)
+
+})});
+
+function getNum (e) {
+  if(firstOp === "" ) {
+    firstNum += e ;
+    console.log(firstNum)
+    screen(firstNum);
+  }else if( firstNum) {
+    secondNum += e; 
+    console.log(secondNum);
+    screen(secondNum);  
+  }else if (secondOp == "equal") {
+    operate(firstNum,firstOp,secondNum); 
+    //screen(firstNum,firstOp,secondNum,secondOp)
+    screen(result);
+  
+  } 
+  
+}
+
+operators.forEach((op => {
+  op.addEventListener('click', (e) => {
+    op = firstOp
+    if( op === "") { 
+      firstOp =  e.target.value;
+      console.log(firstOp)
+      screen(firstOp); 
+      decimalCount = 0
+    }else if (firstOp  && secondNum){
+      secondOp = e.target.value; 
+      console.log(secondOp);
+      operate(firstNum,firstOp,secondNum); // sends original numbers to calculate
+      secondNum = ""  
+      firstOp = secondOp 
+        if (secondOp == "equal"){
+          firstOp = ""; 
+        }
+      screen(firstOp,secondNum); 
+    }
+    })}
+));  
+
+
+function operate (num1,sign ,num2 ) {
+  num1 = Number(firstNum);
+  sign = firstOp ;
+  num2 = Number(secondNum);
+
+  switch(sign){  
+      case "+": 
+        result = num1 + num2
+        break;
+     case "-": 
+        result = num1 - num2
+        break;
+     case "x": 
+        result = num1 * num2
+        break;
+      case "/": 
+        if (num2 === 0){
+          clearAll();
+          alert("You know we can't do that"); 
+          }else{
+          result = num1 / num2}
+          break;
+       }
+       result = Math.round((result + Number.EPSILON) * 1000)  / 1000;  //rounds result to 3 decimals
+       console.log(result); 
+       firstNum = String(result)
+       screen(result);
+       
+}
+
+del.addEventListener('click',() => {
+  if(secondNum) {
+    secondNum = secondNum.slice(0,-1);
+    screen(secondNum);
+  }else if (secondNum == "" && firstOp){
+    firstOp = firstOp.slice(0,-1);
+    screen(firstOp);
+  }else if (firstOp == ""){
+    firstNum = firstNum.slice(0,-1);
+    screen(firstNum);
+  }
+})
+
+
+function screen (num,sign,secNum){ //signTwo, answer) {
+  num = firstNum ;  
+  sign = firstOp ; 
+  secNum = secondNum;
+  //signTwo = secondOp;
+    //if(secondOp == "equal"){
+     // signTwo = "="
+    //}else{
+     // signTwo = ""
+   // }
+  //answer = result;
+  currDis.textContent = `${num} ${sign} ${secNum}`; 
+  //if (answer && secondOp == "equal"){
+    //resultDis.textContent = `${answer}`
+   //}else {
+    //resultDis.textContent = ""
+  //}
+}
+
+
+clear.addEventListener('click', clearAll)
+
+function clearAll () {
+  currDis.textContent = "";
+  firstNum  = "";
+  secondNum = "";
+  firstOp = ""
+  result = "";
+  secondOp = ""; 
+  decimalCount = 0
+};
+
+clearAll() ;
+
 //Issue #1 : Trying to create buttons 0-9 with loops so don't have to create them and querySelect all of them individually
 // Solution #1 : Made the buttons manually
 
@@ -54,149 +204,8 @@
 //Issue #7 : Couldn't figure out how to prevent multiple decimals for each number
 //Solution #7: created decimalCount variable so each time clicked, it adds one and if more than one it "returns" so stops. And reset decimalCount to 0 when firstOp is defined
 
-const container = document.querySelector("container");
-const numbers = document.querySelectorAll(".digits .numbers");
-const operators = document.querySelectorAll(".mathSigns"); 
-const display = document.querySelector('.display');
-const clear = document.querySelector("#clear");
-const del = document.querySelector("#delete");
-const currDis = document.getElementById("#currrent-display");
-const prevDis = document.getElementById("#prev-display");
 
-let firstNum = "";
-let secondNum = "" ; 
-let firstOp = "";
-let result = ""
-let secondOp = "";
-let decimalCount = 0
-//if no operator then firstNum = first clicked and if there is operator then the clicked value = secondNum
-numbers.forEach((number) => {
-    number.addEventListener('click', (e)=> {
-      e = e.target.value
-      if (e === "."){ // +1 for each decimal
-        decimalCount++;
-      }
+//Issure #8: Making function delete button. Can't figure out how to reassign the variables (firstNum, firstOp, etc) when sliced. The display would slice but it wouldn't actually slice from the variable. So if I type "12 + 32", click delete, the display would show "12 + 3", then once I press number 4 after, display shows "12 + 324"
+//Because the display shows that the number and operator variables are equal to. So since im only slicing from the display, it's not actually changing the variable value. It's just visually changing, so when I click another number after "deleting", it just shows everything since the variable didnt direclty get sliced
 
-      if (e === "." && decimalCount > 1) { // For more than one decimal don't do anything. Return
-        return
-      }
-      getNum(e)
-
-})});
-
-function getNum (e) {
-  if(firstOp === "") {
-    firstNum += e ;
-    console.log(firstNum)
-    screen(firstNum);
-  }else if( firstNum) {
-    secondNum += e; 
-    console.log(secondNum)
-    screen(secondNum);  
-  }else if (secondOp == "equal") {
-    operate(firstNum,firstOp,secondNum); 
-  } 
-  
-}
-
-
-operators.forEach((op => {
-  op.addEventListener('click', (e) => {
-    op = firstOp
-    if( op === "") { 
-      firstOp =  e.target.value;
-      console.log(firstOp)
-      screen(firstOp); 
-      decimalCount = 0
-    }else if (op && secondNum){
-      secondOp = e.target.value; 
-      console.log(secondOp);
-      operate(firstNum,firstOp,secondNum); // sends original numbers to calculate
-      secondNum = ""  
-      firstOp = secondOp 
-      screen(firstOp,secondNum); 
-    }
-    })}
-));  
-
-
-function operate (num1,sign ,num2 ) {
-  num1 = Number(firstNum);
-  sign = firstOp ;
-  num2 = Number(secondNum);
-
-  switch(sign){  
-      case "+": 
-        result = add(num1,num2)
-        break;
-     case "-": 
-        result = subtract(num1,num2)
-        break;
-     case "x": 
-        result = multiply(num1,num2)
-        break;
-      case "/": 
-        if (num2 === 0){
-          clearAll();
-          alert("You know we can't do that"); 
-          }else{
-          result = divide(num1,num2)}
-          break;
-      case "^":
-        result = exponent(num1,num2)
-       }
-       result = Math.round((result + Number.EPSILON) * 1000)  / 1000;  //rounds result to 3 decimals
-       console.log(result); 
-       firstNum = result
-       screen(result);
-       
-}
-
-function screen () {
-  num = firstNum ;  
-  sign = firstOp
-  if (sign == "equal"){
-    sign = ""; 
-  }
-  secNum = secondNum;
-  display.textContent  = `${num} ${sign} ${secNum}`
-   
-}
-
-del.addEventListener('click', () => { //create backspace button and decimal button
-screen.splice(screen.length-1, 1)
-
-})
-clear.addEventListener('click', clearAll)
-
-function clearAll () {
-  display.textContent = ""
-  firstNum  = "";
-  secondNum = "";
-  firstOp = ""
-  result = "";
-  secondOp = ""; 
-  decimalCount = 0
-};
-
-clearAll() ;
-
-function add (num1, num2) { 
-  return num1 + num2 ;
-}
-
-function subtract (num1, num2) { 
-    return num1 - num2 ;
-}
-
-function multiply (num1, num2) { 
-    return num1 * num2 ;
-}
-
-function divide (num1, num2) { 
-  return num1 / num2 ;
-}
-
-function exponent (num1,num2){
-  return num1 ** num2
-}
+//Solution #8: Made a delete button event listener and directly sliced the variables depending on which ones are == "" or not
