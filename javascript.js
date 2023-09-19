@@ -39,9 +39,8 @@ function getNum (e) {
     console.log(secondNum);
     screen(secondNum);  
   }else if (secondOp == "equal") {
+    screen(firstNum,firstOp,secondNum,secondOp)
     operate(firstNum,firstOp,secondNum); 
-    //screen(firstNum,firstOp,secondNum,secondOp)
-    screen(result);
   
   } 
   
@@ -58,14 +57,16 @@ operators.forEach((op => {
     }else if (firstOp  && secondNum){
       secondOp = e.target.value; 
       console.log(secondOp);
+      if (secondOp == "equal"){
+          screen(firstNum,firstOp,secondNum,secondOp)
+          operate(firstNum,firstOp,secondNum); // sends original numbers to calculate
+      }else{
       operate(firstNum,firstOp,secondNum); // sends original numbers to calculate
       secondNum = ""  
       firstOp = secondOp 
-        if (secondOp == "equal"){
-          firstOp = ""; 
-        }
+      firstNum = String(result)
       screen(firstOp,secondNum); 
-    }
+    }}
     })}
 ));  
 
@@ -95,13 +96,17 @@ function operate (num1,sign ,num2 ) {
        }
        result = Math.round((result + Number.EPSILON) * 1000)  / 1000;  //rounds result to 3 decimals
        console.log(result); 
-       firstNum = String(result)
        screen(result);
        
 }
 
 del.addEventListener('click',() => {
-  if(secondNum) {
+  if(secondOp == "equal"){
+    secondOp = secondOp.slice(0,-1);
+    secondNum = secondNum.slice(secondNum);
+    screen(secondOp) ;
+    screen(secondNum);
+  }else if (secondNum && secondOp == "") {
     secondNum = secondNum.slice(0,-1);
     screen(secondNum);
   }else if (secondNum == "" && firstOp){
@@ -114,23 +119,23 @@ del.addEventListener('click',() => {
 })
 
 
-function screen (num,sign,secNum){ //signTwo, answer) {
+function screen () {
   num = firstNum ;  
   sign = firstOp ; 
   secNum = secondNum;
-  //signTwo = secondOp;
-    //if(secondOp == "equal"){
-     // signTwo = "="
-    //}else{
-     // signTwo = ""
-   // }
-  //answer = result;
-  currDis.textContent = `${num} ${sign} ${secNum}`; 
-  //if (answer && secondOp == "equal"){
-    //resultDis.textContent = `${answer}`
-   //}else {
-    //resultDis.textContent = ""
-  //}
+  signTwo = secondOp;
+    if(secondOp == "equal"){
+      signTwo = "="
+    }else{
+      signTwo = ""
+    }
+  answer = result;
+  currDis.textContent = `${num} ${sign} ${secNum} ${signTwo}`; 
+  if (answer && secondOp == "equal"){
+    resultDis.textContent = `${answer}`
+   }else {
+    resultDis.textContent = ""
+  }
 }
 
 
@@ -138,6 +143,7 @@ clear.addEventListener('click', clearAll)
 
 function clearAll () {
   currDis.textContent = "";
+  resultDis.textContent = "";
   firstNum  = "";
   secondNum = "";
   firstOp = ""
