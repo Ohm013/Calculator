@@ -1,7 +1,9 @@
 *{
     border-radius: 5px ;
 }
-
+p {
+    text-align: center ;
+}
 body {
     display: flex;
     justify-content: center;
@@ -14,7 +16,7 @@ body {
     width: 360px;
     padding-top: 10px ; 
     margin-left: 10px;
-    background-color: #bbdccb;;
+    background-color: #bbdccb;
     margin-bottom: 2em ;
     margin-top: 2rem ;
 }
@@ -35,10 +37,10 @@ body {
     border-radius: 15px ;
     border: 2px solid black ;
     width: 380px ;
-    height: 550px;
+    height: 600px;
     padding: 1.6rem; 
     background-color: #e7e7e7;
-    padding-bottom: 50px ;
+    padding-bottom: 10px ;
 }
 button {
     font-family: inherit;
