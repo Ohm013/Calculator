@@ -1,4 +1,3 @@
-//Come back and made the two displays for current and prev equation
 const container = document.querySelector("container");
 const numbers = document.querySelectorAll(".digits .numbers");
 const operators = document.querySelectorAll(".mathSigns"); 
@@ -26,24 +25,19 @@ numbers.forEach((number) => {
         return
       }
       getNum(e)
-
 })});
 
 function getNum (e) {
   if(firstOp === "" ) {
     firstNum += e ;
-    console.log(firstNum)
     screen(firstNum);
   }else if( firstNum) {
     secondNum += e; 
-    console.log(secondNum);
     screen(secondNum);  
   }else if (secondOp == "equal") {
     screen(firstNum,firstOp,secondNum,secondOp)
     operate(firstNum,firstOp,secondNum); 
-  
   } 
-  
 }
 
 operators.forEach((op => {
@@ -51,17 +45,15 @@ operators.forEach((op => {
     op = firstOp
     if( op === "") { 
       firstOp =  e.target.value;
-      console.log(firstOp)
       screen(firstOp); 
       decimalCount = 0
     }else if (firstOp  && secondNum){
       secondOp = e.target.value; 
-      console.log(secondOp);
       if (secondOp == "equal"){
           screen(firstNum,firstOp,secondNum,secondOp)
           operate(firstNum,firstOp,secondNum); // sends original numbers to calculate
       }else{
-      operate(firstNum,firstOp,secondNum); // sends original numbers to calculate
+      operate(firstNum,firstOp,secondNum); 
       secondNum = ""  
       firstOp = secondOp 
       firstNum = String(result)
@@ -95,7 +87,6 @@ function operate (num1,sign ,num2 ) {
           break;
        }
        result = Math.round((result + Number.EPSILON) * 1000)  / 1000;  //rounds result to 3 decimals
-       console.log(result); 
        screen(result);
        
 }
@@ -119,7 +110,7 @@ del.addEventListener('click',() => {
 })
 
 
-function screen () {
+function screen () { //display screen, one for equation and one for result
   num = firstNum ;  
   sign = firstOp ; 
   secNum = secondNum;
